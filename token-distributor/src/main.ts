@@ -1,5 +1,5 @@
 import { dataSource } from './database';
-import { api, initialize, transferProcess } from './utils';
+import { initApi, initialize, transferProcess } from './utils';
 import Server from './server';
 import { DappOwnerService, TokenService } from './services';
 
@@ -8,7 +8,7 @@ const main = async () => {
   await dataSource.initialize();
   console.log(`Database connections has been initialized`);
 
-  await api.isReadyOrError;
+  await initApi();
 
   transferProcess();
 

@@ -1,4 +1,4 @@
-name: "Build image: dapp-dev"
+name: "Build image: token-distributor "
 
 on:
   workflow_dispatch:

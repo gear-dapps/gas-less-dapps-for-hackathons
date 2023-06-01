@@ -1,5 +1,6 @@
 import assert from 'assert';
 import { config } from 'dotenv';
+import { BN } from '@polkadot/util';
 
 config();
 
@@ -17,9 +18,8 @@ export default {
   },
   api: {
     address: getEnv('WS_ADDRESS', 'ws://127.0.0.1:9944'),
-    value: getEnv('BALANCE_TO_TRANSFER', '100000'),
+    value: new BN(getEnv<number>('BALANCE_TO_TRANSFER', '10000000000000', Number)),
     accountSeed: getEnv('SEED', '//Alice'),
-    maxLimit: getEnv('MAX_LIMIT', '1000000'),
   },
   server: {
     port: getEnv('PORT', '3000', Number),

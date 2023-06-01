@@ -2,7 +2,7 @@
 
 password=bob
 
-dapp_dev_addr=http://mithriy.com:3000
+dapp_dev_addr=http://localhost:3001
 
 url=$dapp_dev_addr/tokens/request
 

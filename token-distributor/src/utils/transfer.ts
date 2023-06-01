@@ -1,5 +1,6 @@
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { u128 } from '@polkadot/types';
+import { BN } from '@polkadot/util';
 
 import config from '../config';
 import { rootAccount } from './rootAcc';
@@ -12,7 +13,35 @@ const {
 
 const provider = new WsProvider(address);
 
-export const api = new ApiPromise({ provider });
+let api: ApiPromise;
+let existentialDeposit: BN;
+
+export async function initApi() {
+  api = new ApiPromise({ provider });
+  await api.isReadyOrError;
+
+  console.log(`Connected to ${(await api.rpc.system.chain()).toString()}`);
+
+  api.on('disconnected', () => {
+    reconnect();
+  });
+  existentialDeposit = (api.consts.balances.existentialDeposit as u128).toBn();
+}
+
+async function reconnect() {
+  console.log('Reconnecting...');
+  try {
+    await api.disconnect();
+  } catch (err) {
+    console.log(err);
+  }
+
+  await new Promise((resolve) => {
+    setTimeout(resolve, 2000);
+  });
+
+  return initApi();
+}
 
 const transferEmitter = new EventEmitter();
 
@@ -51,16 +80,16 @@ export async function transferProcess() {
   for await (const { keys, id } of processQ()) {
     const result = {};
     let error = null;
-    const filtered = [];
+    const filtered: Record<string, BN> = {};
 
     for (const k of keys) {
       try {
         const {
           data: { free },
-        } = (await api.query.system.account(k)) as any;
+        } = (await api.query.system.account(k)) as unknown as { data: { free: u128 } };
 
-        if ((free as u128).ltn(Number(config.api.maxLimit))) {
-          filtered.push(k);
+        if (free.lt(value.sub(existentialDeposit))) {
+          filtered[k] = value.sub(free);
           continue;
         }
         result[k] = 0;
@@ -74,7 +103,7 @@ export async function transferProcess() {
       continue;
     }
 
-    const txs = filtered.map((k) => api.tx.balances.transferKeepAlive(k, value));
+    const txs = Object.entries(filtered).map(([k, v]) => api.tx.balances.transferKeepAlive(k, v));
     if (txs.length > 0) {
       try {
         await new Promise((resolve, reject) =>
