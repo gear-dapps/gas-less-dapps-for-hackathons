@@ -1,0 +1,19 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form {
+  width: 100%;
+  max-width: 320px;
+}
+
+.inputs {
+  width: 100%;
+  margin-bottom: 48px;
+
+  > *:not(:last-child) {
+    margin-bottom: 24px;
+  }
+}

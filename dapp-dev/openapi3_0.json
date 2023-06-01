@@ -1,0 +1,174 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Dev-dApp backend",
+    "description": "Backend that allows you to facilitate development and use of your dApp.",
+    "version": "0.0.1"
+  },
+  "paths": {
+    "/user/register": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Register a new user",
+        "description": "Register a new user in the backend",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "publicKey": {
+                    "type": "string",
+                    "example": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+                  },
+                  "privateKey": {
+                    "type": "string",
+                    "example": "bottom drive obey lake curtain smoke basket hold race lonely fit walk//Alice"
+                  },
+                  "nickname": {
+                    "type": "string",
+                    "example": "alice"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "alice12345"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "68396bc-2ba3-4cff-b6d8-4199f08a63a4"
+                    },
+                    "nickname": {
+                      "type": "string",
+                      "example": "alice"
+                    },
+                    "publicKey": {
+                      "type": "string",
+                      "example": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+                    },
+                    "rawAddress": {
+                      "type": "string",
+                      "example": "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/user/get_keys": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Get user keys",
+        "description": "Get user keys by user's nickname and password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nickname": {
+                    "type": "string",
+                    "example": "alice"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "alice12345"
+                  }
+                }
+              }
+            },
+            "required": true
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "publicKey": {
+                      "type": "string",
+                      "example": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+                    },
+                    "privateKey": {
+                      "type": "string",
+                      "example": "bottom drive obey lake curtain smoke basket hold race lonely fit walk//Alice"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/tokens/request": {
+      "post": {
+        "tags": ["tokens"],
+        "summary": "Request tokens for all registered users",
+        "description": "Returns a map where keys are public keys of the users and values are amount of tokens transferred to theirs accounts",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string",
+                    "example": "alice12345",
+                    "description": "admin's password"
+                  }
+                }
+              }
+            },
+            "required": true
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY": 10000000,
+                    "5GDCKqWHVg6NG9RQeKQjAQ7t9Pc94UZ3FsxRDCNyesUudi8Y": 0,
+                    "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty": 10000000
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error"
+          }
+        }
+      }
+    }
+  }
+}

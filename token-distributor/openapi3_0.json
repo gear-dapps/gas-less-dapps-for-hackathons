@@ -1,0 +1,133 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Token distributor",
+    "description": "Backend for token distribution",
+    "version": "0.0.1"
+  },
+  "paths": {
+    "/dapp_owner/register": {
+      "post": {
+        "tags": ["dapp_owner"],
+        "summary": "Register a new dapp owner",
+        "description": "Register a new dapp owner to allow to request tokens",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "publicKey": {
+                    "type": "string",
+                    "example": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+                  },
+                  "singature": {
+                    "type": "string",
+                    "example": "0x...."
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "alice@gear-tech.io"
+                  },
+                  "dappName": {
+                    "type": "string",
+                    "example": "My Amazing dApp"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "68396bc-2ba3-4cff-b6d8-4199f08a63a4"
+                    },
+                    "publicKey": {
+                      "type": "string",
+                      "example": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+                    },
+                    "publicKeyRaw": {
+                      "type": "string",
+                      "example": "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "alice@gear-tech.io"
+                    },
+                    "isApproved": {
+                      "type": "boolean",
+                      "example": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tokens/request": {
+      "post": {
+        "tags": ["dapp_owner"],
+        "summary": "Request tokens for users from applied list of theirs public keys",
+        "description": "Returns a map where keys are public keys of the users and values are amount of tokens transferred to theirs accounts",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "publicKey": {
+                    "type": "string",
+                    "example": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+                  },
+                  "singature": {
+                    "type": "string",
+                    "example": "0x...."
+                  },
+                  "users": {
+                    "type": "array",
+                    "example": [
+                      "5GDCKqWHVg6NG9RQeKQjAQ7t9Pc94UZ3FsxRDCNyesUudi8Y",
+                      "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                      "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                      "5FyVYRtJ3z92om1JmLWYbwANWaXLHLbPbXG7rQqHRzUL2BdV"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY": 10000000,
+                    "5GDCKqWHVg6NG9RQeKQjAQ7t9Pc94UZ3FsxRDCNyesUudi8Y": 0,
+                    "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty": 10000000,
+                    "5FyVYRtJ3z92om1JmLWYbwANWaXLHLbPbXG7rQqHRzUL2BdV": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
