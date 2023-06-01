@@ -15,7 +15,7 @@ You can find API documentation by accessing the `/api-docs` endpoint after runni
 
 Run using Docker
 ```bash
-docker run -dt -p 3000:3000 -v /tmp/dapp-dev:/usr/src/db --env-file path/to/env/file ghcr.io/osipov-mit/free-tokens/dapp-dev:latest
+docker run -dt -p 3000:3000 -v /tmp/dapp-dev:/usr/src/db --env-file path/to/env/file ghcr.io/gear-dapps/gas-less-dapps-for-hackathons/dapp-dev:latest
 ```
 
 ## token-distributor
