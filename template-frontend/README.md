@@ -1,28 +1,25 @@
-<p align="center">
-  <a href="https://gear-tech.io">
-    <img src="https://github.com/gear-tech/gear/blob/master/images/logo-grey.png" width="400" alt="GEAR">
-  </a>
-</p>
-<p align=center>
-    <a href="https://github.com/gear-tech/gear-js/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-GPL%203.0-success"></a>
-</p>
-<hr>
+# React application template
 
-## Description
+***It's important to note that this application should only be used for development and testing purposes as it may not be safe and secure for use in production.***
 
-React application of [_wiki link_](#) based on [Rust smart-contract](#).
+***Public and private keys from this app should not be used anywhere else except for this app.***
 
 ## Getting started
 
 ### Install packages:
 
 ```sh
-yarn install
+npm install
 ```
 
 ### Declare environment variables:
 
-Create `.env` file, `.env.example` will let you know what variables are expected.
+Create `.env` file, `.env.example` will let you know what variables are expected:
+
+- `REACT_APP_NODE_ADDRESS` - network address you want connect to
+- `REACT_APP_API_ADDRESS` - login backend endpoint
+- `REACT_APP_CONTRACT_ADDRESS` - address of the contract uploaded to chosen network
+- `REACT_APP_META_RAW` - contract meta from compiled `meta.txt` file
 
 In order for all features to work as expected, the node and it's runtime version should be chosen based on the current `@gear-js/api` version.
 
@@ -31,5 +28,5 @@ In case of issues with the application, try to switch to another network or run 
 ### Run the app:
 
 ```sh
-yarn start
+npm start
 ```
