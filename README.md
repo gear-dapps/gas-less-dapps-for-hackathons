@@ -14,6 +14,7 @@ A backend service provides a few endpoints that allow you to store user pairs of
 You can find API documentation by accessing the `/api-docs` endpoint after running the service.
 
 Run using Docker
+You need to replace `path/to/env/file` with the path to your environment variables file on your machine. Please refer to the `dapp-dev/.env.example` file to create your own file
 ```bash
 docker run -dt -p 3000:3000 -v /tmp/dapp-dev:/usr/src/db --env-file path/to/env/file ghcr.io/gear-dapps/gas-less-dapps-for-hackathons/dapp-dev:latest
 ```
@@ -28,7 +29,7 @@ You can find API documentation by accessing the `/api-docs` endpoint after runni
 To register a dApp owner you'll need to send a `POST` request to the `/dapp_owner/register` endpoint with the `public key` and `email` of the owner, `dApp name`, and `signature` (which is actually the owner's public key signed with their private key). You can create a signed payload using the [polkadot.js.org](https://polkadot.js.org/apps/?rpc=wss://testnet.vara.rs#/signing) app.
 
 ```bash
-curl --location https://token-dist.backend/dapp_owner/register --header 'Content-Type: application/json' --data '{
+curl --location https://vara-dev-faucet.gear-tech.io/dapp_owner/register --header 'Content-Type: application/json' --data '{
   "publicKey": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
   "dappName": "Amazing dApp",
   "signature": "0x...",
@@ -42,6 +43,7 @@ Instead of sending request mannualy you can use `register_owner.sh` script from 
 2. Request tokens for dApp user
 Once the dApp owner is approved, they can request free tokens for their dApp users by sending a `POST` request to the `/tokens/request` endpoint in the dapp-dev backend.
 
+You need to replace `dapp-dev.backend` with the address of your dapp-dev backend
 ```bash
 curl --location https://dapp-dev.backend/tokens/request --header 'Content-Type: application/json' --data '{"password": "bob"}'
 ```

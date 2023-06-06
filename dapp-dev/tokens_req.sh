@@ -2,7 +2,7 @@
 
 password=bob
 
-dapp_dev_addr=http://localhost:3001
+dapp_dev_addr=https://vara-dev-faucet.gear-tech.io
 
 url=$dapp_dev_addr/tokens/request
 
