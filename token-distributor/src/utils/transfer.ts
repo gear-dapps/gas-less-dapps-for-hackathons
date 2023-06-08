@@ -94,6 +94,7 @@ export async function transferProcess() {
         }
         result[k] = 0;
       } catch (err) {
+        console.log(err);
         error = new Error('Error during getting account balances');
       }
     }
@@ -121,6 +122,7 @@ export async function transferProcess() {
           }),
         );
       } catch (err) {
+        console.log(err);
         error = new Error('Error during sending transaction');
       }
     }
