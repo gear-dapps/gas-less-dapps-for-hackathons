@@ -9,6 +9,10 @@ export interface IDappOwnerRegisterReqBody {
 
 export type IDappOwnerRegisterReq = Request<any, any, IDappOwnerRegisterReqBody>;
 
+export interface IDappOwnerIsApprovedReqBody extends Pick<IDappOwnerRegisterReqBody, 'publicKey' | 'signature'> {}
+
+export type IDappOwnerIsApprovedReq = Request<any, any, IDappOwnerIsApprovedReqBody>;
+
 export interface IDappOwnerApproveReqBody {
   id: string;
   publicKey: string;

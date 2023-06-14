@@ -2,7 +2,7 @@ import { decodeAddress } from '@polkadot/util-crypto';
 import { u8aToHex } from '@polkadot/util';
 import { Repository } from 'typeorm';
 
-import { IDappOwnerApproveReqBody, IDappOwnerRegisterReqBody } from '../types/index';
+import { IDappOwnerApproveReqBody, IDappOwnerIsApprovedReqBody, IDappOwnerRegisterReqBody } from '../types/index';
 import { Dapp, User, dataSource } from '../database/index';
 import { verifySignature } from '../utils/index';
 import { rootAccountRaw } from '../utils';
@@ -58,5 +58,19 @@ export class DappOwnerService {
 
   async nonApproved(): Promise<User[]> {
     return this.userRepo.find({ where: { isApproved: false }, relations: { dapps: true } });
+  }
+
+  async isApproved({ publicKey, signature }: IDappOwnerIsApprovedReqBody): Promise<Partial<User>> {
+    verifySignature(publicKey, signature);
+    const user = await this.userRepo.findOne({
+      where: { publicKeyRaw: u8aToHex(decodeAddress(publicKey)) },
+      relations: { dapps: true },
+    });
+
+    if (!user) {
+      throw new Error(`User not found`);
+    }
+
+    return { isApproved: user.isApproved, publicKey: user.publicKey, id: user.id };
   }
 }

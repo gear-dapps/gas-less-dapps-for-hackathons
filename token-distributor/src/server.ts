@@ -3,7 +3,7 @@ import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import fs from 'fs';
 
-import { IDappOwnerApproveReq, IDappOwnerRegisterReq, ITokensRequestReq } from './types';
+import { IDappOwnerApproveReq, IDappOwnerIsApprovedReq, IDappOwnerRegisterReq, ITokensRequestReq } from './types';
 import config from './config';
 import { DappOwnerService, TokenService } from './services';
 
@@ -32,6 +32,14 @@ export default class Server {
     this.app.post('/dapp_owner/approve', async (req: IDappOwnerApproveReq, res) => {
       try {
         res.json(await this.dappOwnerService.approve(req.body));
+      } catch (err) {
+        res.status(400).send(err.message);
+      }
+    });
+
+    this.app.post('/dapp_owner/is_approved', async (req: IDappOwnerIsApprovedReq, res) => {
+      try {
+        res.json(await this.dappOwnerService.isApproved(req.body));
       } catch (err) {
         res.status(400).send(err.message);
       }
