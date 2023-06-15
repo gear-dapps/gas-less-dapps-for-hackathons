@@ -42,6 +42,16 @@ export class Server {
       }
     });
 
+    this.app.post('/user/is_owner', async (req: IUserRegisterReq, res) => {
+      try {
+        res.status(200).json(await this.userService.isAdmin(req.body));
+      } catch (err) {
+        console.error(err);
+        res.statusMessage = err.message;
+        res.status(400).send();
+      }
+    });
+
     this.app.post('/tokens/request', async (req: ITokenReq, res) => {
       try {
         await this.userService.isAdmin(req.body);

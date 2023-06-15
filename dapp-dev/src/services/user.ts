@@ -63,10 +63,15 @@ export class UserService {
     return { privateKey, publicKey: user.publicKey };
   }
 
-  async isAdmin({ password }: ITokenReqBody): Promise<boolean> {
-    const pkRaw = decodeAddress(config.owner.publicKey);
+  async isAdmin({ password, publicKey }: Partial<IUserRegisterBody>): Promise<boolean> {
+    const pkRawAdmin = decodeAddress(config.owner.publicKey);
+    const pkRawReq = decodeAddress(publicKey);
 
-    let admin = await this.repo.findOneBy({ rawAddress: pkRaw });
+    if (pkRawReq !== pkRawAdmin) {
+      throw new Error('Forbidden');
+    }
+
+    let admin = await this.repo.findOneBy({ rawAddress: pkRawAdmin });
 
     if (!admin || !(await IsValidPassword(password, admin.password))) {
       throw new Error('Forbidden');
