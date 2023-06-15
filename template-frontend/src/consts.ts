@@ -1,4 +1,8 @@
-import { HexString } from '@polkadot/util/types';
+import { HexString } from "@polkadot/util/types";
+
+export const sleep = (s: number) =>
+  // eslint-disable-next-line no-promise-executor-return
+  new Promise((resolve) => setTimeout(resolve, s * 1000));
 
 const ADDRESS = {
   NODE: process.env.REACT_APP_NODE_ADDRESS as string,
@@ -7,7 +11,7 @@ const ADDRESS = {
 };
 
 const LOCAL_STORAGE = {
-  ACCOUNT: 'account',
+  ACCOUNT: "account",
 };
 
 const META_RAW = process.env.REACT_APP_META_RAW as string;

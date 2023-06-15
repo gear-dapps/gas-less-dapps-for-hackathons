@@ -4,3 +4,35 @@
   left: 50%;
   transform: translate(-50%);
 }
+
+
+@keyframes loading {
+  from {
+    transform: translate(-37.5%)
+  }
+  to {
+    transform: translate(37.5%)
+  }
+}
+$bgColorSecondary: #202022;
+$bgColorTertiary: #414141;
+$bigTimeout: 1000ms;
+
+
+@mixin loading($colorFrom: $bgColorSecondary, $colorTo: $bgColorTertiary) {
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0 -150%;
+    background: linear-gradient(90deg, rgba($bgColorSecondary, 0.1) 25%,rgba($bgColorTertiary, 0.24) 37%,rgba($bgColorSecondary, 0.1) 63%);
+    animation: loading $bigTimeout ease infinite;
+  }
+}
+
+.loading {
+  @include loading();
+
+  position: relative;
+}

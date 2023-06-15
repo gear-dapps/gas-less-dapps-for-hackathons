@@ -1,0 +1,58 @@
+@use '@gear-js/ui/variables' as *;
+
+.container {
+  flex-grow: 1;
+  height: 100%;
+  width: 100%;
+
+  > *:not(:first-child) {
+    margin-top: 80px;
+  }
+}
+
+.containerHero {
+  width: 100%;
+
+  > *:not(:first-child) {
+    margin-top: 10px;
+  }
+}
+
+.containerHeroText {
+  margin: 0 auto;
+  font-size: $fontSizeMedium;
+  color: rgba(white, 80%);
+
+  > *:not(:first-child) {
+    margin-top: 12px;
+  }
+}
+
+.containerHeroTextDetails {
+  font-size: $fontSize;
+
+  table {
+    border-collapse: collapse;
+  }
+
+  tr > * {
+    padding: 6px 12px;
+    text-align: left;
+    border: 1px solid $textColorSecondary;
+  }
+
+  > *:not(:first-child) {
+    margin-top: 5px;
+  }
+}
+
+.adminUsersTokens {
+  > *:not(:first-child) {
+    margin-top: 20px;
+  }
+}
+.adminUsersTokensContent {
+  > *:not(:first-child) {
+    margin-top: 12px;
+  }
+}

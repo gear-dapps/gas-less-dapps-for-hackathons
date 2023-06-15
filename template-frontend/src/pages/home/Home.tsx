@@ -1,23 +1,66 @@
-import { getProgramMetadata } from '@gear-js/api';
-import { Button } from '@gear-js/ui';
-import { useSendMessage } from 'hooks/useSendMessage';
+import { Button } from "@gear-js/ui";
+import { useAlert } from "@gear-js/react-hooks";
+import { useState } from "react";
+import { useAccount } from "../../contexts/Account";
+import styles from "./home.module.scss";
+import { AvailableGames } from "../../components/common/available-games";
+import { ADDRESS } from "../../consts";
+import {IUsersTokens} from '../../types/admin'
+import {AdminGetTokens} from '../../components/admin/admin-get-tokens'
+
 
 function Home() {
-  const pingProgramId =
-    '0x39e3d9443261685ce84331b041300793f6456d4010766f44460598bfe285cfbc';
-  const pingMetaHex =
-    '0x000001000000000100000000000000000001010000003408000000050200040000020000';
+  const { account } = useAccount();
+  const [usersTokens, setUsersTokens] = useState<IUsersTokens>({});
 
-  const sendMessage = useSendMessage(
-    pingProgramId,
-    getProgramMetadata(pingMetaHex)
-  );
-
-  const handleClick = () => sendMessage('PING');
+  const isAdmin = Boolean(account.isAdmin);
 
   return (
-    <div>
-      <Button text="Ping" onClick={handleClick} />
+    <div className={styles.container}>
+      <div className={styles.containerHero}>
+        <h1>Welcome, {isAdmin ? "admin" : "gamer"}!</h1>
+        <div className={styles.containerHeroText}>
+          <p>Your account details:</p>
+          <div className={styles.containerHeroTextDetails}>
+            <table>
+              <tbody>
+                <tr>
+                  <th scope="row">Public key:</th>
+                  <td>{account.publicKey}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Private key:</th>
+                  <td>{account.privateKey}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      {isAdmin && (
+        <div className={styles.adminUsersTokens}>
+          <AdminGetTokens updateData={setUsersTokens} />
+
+          <div className={styles.adminUsersTokensContent}>
+            <h2>Users Tokens</h2>
+            <div className={styles.containerHeroTextDetails}>
+              <table>
+                <tbody>
+                  {Object.entries(usersTokens)?.map(([user, value]) => (
+                    <tr>
+                      <th scope="row">{user}</th>
+                      <td>{value}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <AvailableGames />
     </div>
   );
 }

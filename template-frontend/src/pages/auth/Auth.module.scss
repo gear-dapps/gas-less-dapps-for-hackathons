@@ -1,10 +1,29 @@
-.container {
+.containerHero {
   width: 100%;
-  max-width: 320px;
+  max-width: 620px;
+  text-align: center;
+
+  > *:not(:first-child) {
+    margin-top: 10px;
+  }
+}
+
+.containerHeroText {
+  max-width: 560px;
+  margin: 0 auto;
+  //> *:not(:first-child) {
+  //  margin-top: 5px;
+  //}
+}
+
+.containerForm {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 320px;
+  margin: 40px auto 0;
 
   > *:not(:last-child) {
-    margin-bottom: 32px;
+    margin-bottom: 16px;
   }
 }
