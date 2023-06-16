@@ -11,9 +11,6 @@
 .containerHeroText {
   max-width: 560px;
   margin: 0 auto;
-  //> *:not(:first-child) {
-  //  margin-top: 5px;
-  //}
 }
 
 .containerForm {
@@ -23,7 +20,19 @@
   max-width: 320px;
   margin: 40px auto 0;
 
-  > *:not(:last-child) {
-    margin-bottom: 16px;
+  > * + * {
+    margin-top: 16px;
+  }
+}
+
+.signIn {
+  text-align: center;
+
+  a {
+    transition: opacity 250ms ease;
+
+    &:hover {
+      opacity: 80%;
+    }
   }
 }

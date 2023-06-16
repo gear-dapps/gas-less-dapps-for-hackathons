@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 type Account = {
   publicKey: string | null;
   privateKey: string | null;
-  isAdmin: boolean | null;
 };
 
 function useAccountData() {
@@ -19,13 +18,12 @@ function useAccountData() {
   const [account, setAccount] = useState<Account>({
     publicKey: sessionStorage.templatePublicKey,
     privateKey: sessionStorage.templatePrivateKey,
-    isAdmin: JSON.parse(sessionStorage.getItem('templateIsAdmin') || 'false'),
   });
 
   const isLoggedIn = !!(account.publicKey && account.privateKey);
 
   const logout = () => {
-    setAccount({ publicKey: null, privateKey: null, isAdmin: false });
+    setAccount({ publicKey: null, privateKey: null });
     navigate("/");
   };
 
@@ -36,14 +34,9 @@ function useAccountData() {
         "templatePrivateKey",
         account.privateKey as string
       );
-      sessionStorage.setItem(
-        "templateIsAdmin",
-        JSON.stringify(account.isAdmin)
-      );
     } else {
       sessionStorage.removeItem("templatePublicKey");
       sessionStorage.removeItem("templatePrivateKey");
-      sessionStorage.removeItem("templateIsAdmin");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);

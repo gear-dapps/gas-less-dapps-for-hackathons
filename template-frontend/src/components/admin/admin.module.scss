@@ -1,0 +1,45 @@
+@use '@gear-js/ui/variables' as *;
+
+.hero {
+  > * + * {
+    margin-top: 24px;
+  }
+}
+
+.heroDescription {
+  > * + * {
+    margin-top: 8px;
+  }
+}
+
+.heroDescriptionStatus {
+  > * + * {
+    margin-top: 12px;
+  }
+}
+
+.asLink {
+  border: none;
+  background: transparent;
+  transition: opacity 250ms ease;
+  cursor: pointer;
+  padding: 0;
+  color: $buttonColor;
+
+  &:hover {
+    opacity: 80%;
+  }
+}
+
+.content {
+  display: flex;
+
+
+  > * {
+    width: 100%;
+
+    + * {
+      margin-left: 60px;
+    }
+  }
+}

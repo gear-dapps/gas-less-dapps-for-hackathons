@@ -2,12 +2,13 @@ import {
   ApiProvider as GearApiProvider,
   AlertProvider as GearAlertProvider,
   ProviderProps,
-} from '@gear-js/react-hooks';
-import { Alert, alertStyles } from '@gear-js/ui';
-import { ComponentType } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { ADDRESS } from 'consts';
-import { AccountProvider } from 'contexts/Account';
+} from "@gear-js/react-hooks";
+import { Alert, alertStyles } from "@gear-js/ui";
+import { ComponentType } from "react";
+import { BrowserRouter } from "react-router-dom";
+import { ADDRESS } from "consts";
+import { AccountProvider } from "contexts/Account";
+import { AdminProvider } from "contexts/admin";
 
 function ApiProvider({ children }: ProviderProps) {
   return (
@@ -23,7 +24,13 @@ function AlertProvider({ children }: ProviderProps) {
   );
 }
 
-const providers = [BrowserRouter, AlertProvider, ApiProvider, AccountProvider];
+const providers = [
+  BrowserRouter,
+  AlertProvider,
+  ApiProvider,
+  AccountProvider,
+  AdminProvider,
+];
 
 function withProviders(Component: ComponentType) {
   return () =>

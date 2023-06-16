@@ -3,32 +3,33 @@ import { Button, Input } from "@gear-js/ui";
 import { useForm } from "@mantine/form";
 import { ADDRESS } from "consts";
 import { useNavigate } from "react-router-dom";
-import { useAccount } from "contexts/Account";
 import { useState } from "react";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MoveLeft } from "lucide-react";
-import styles from "./Login.module.scss";
+import styles from "./login-admin.module.scss";
+import { useAdmin } from "../../contexts/admin";
 
-const initialValues = { login: "", password: "" };
+const initialValues = { login: "", password: "", publicKey: "" };
 
-function Login() {
+function LoginAdmin() {
   const { getInputProps, onSubmit } = useForm({
     initialValues,
     validate: {
       login: (value) => (value.length < 1 ? "Field is required" : null),
       password: (value) => (value.length < 1 ? "Field is required" : null),
+      publicKey: (value) => (value.length < 1 ? "Field is required" : null),
     },
   });
   const alert = useAlert();
   const navigate = useNavigate();
-  const { setAccount } = useAccount();
+  const { setAdmin } = useAdmin();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSubmit = onSubmit(({ login, password }) => {
+  const handleSubmit = onSubmit(({ login, password, publicKey }) => {
     setLoading(true);
-    fetch(`${ADDRESS.API}/user/get_keys`, {
+    fetch(`${ADDRESS.API}/user/is_owner`, {
       method: "POST",
-      body: JSON.stringify({ nickname: login, password }),
+      body: JSON.stringify({ nickname: login, password, publicKey }),
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
@@ -36,9 +37,13 @@ function Login() {
 
         return response.json();
       })
-      .then(({ publicKey, privateKey }) => {
-        setAccount({ publicKey, privateKey });
-        navigate("/");
+      .then((data) => {
+        if (data) {
+          setAdmin({
+            isAdmin: true,
+          });
+          navigate("/");
+        }
       })
       .catch((error: Error) => {
         alert.error(error.message || "Something wrong. Try again later.");
@@ -63,6 +68,12 @@ function Login() {
             direction="y"
             {...getInputProps("password")}
           />
+
+          <Input
+            label="Public key:"
+            direction="y"
+            {...getInputProps("publicKey")}
+          />
         </div>
 
         <div className={styles.footer}>
@@ -84,4 +95,4 @@ function Login() {
   );
 }
 
-export { Login };
+export { LoginAdmin };

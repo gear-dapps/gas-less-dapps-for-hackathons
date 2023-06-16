@@ -42,6 +42,19 @@ function Auth() {
         >
           Register
         </Link>
+
+        <div className={styles.signIn}>
+          <p>
+            Or{" "}
+            <Link
+              to="/login-admin"
+              className={clsx(buttonStyles.button, buttonStyles.link)}
+            >
+              Sign In
+            </Link>{" "}
+            if you are an admin of this service.
+          </p>
+        </div>
       </div>
     </div>
   );

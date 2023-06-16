@@ -1,17 +1,17 @@
-import { GasInfo, ProgramMetadata, decodeAddress } from '@gear-js/api';
-import { EventRecord } from '@polkadot/types/interfaces';
-import { AnyJson, ISubmittableResult } from '@polkadot/types/types';
-import { HexString } from '@polkadot/util/types';
-import { useRef } from 'react';
+import { GasInfo, ProgramMetadata, decodeAddress } from "@gear-js/api";
+import { EventRecord } from "@polkadot/types/interfaces";
+import { AnyJson, ISubmittableResult } from "@polkadot/types/types";
+import { HexString } from "@polkadot/util/types";
+import { useRef } from "react";
 import {
   DEFAULT_ERROR_OPTIONS,
   DEFAULT_SUCCESS_OPTIONS,
   useAlert,
   useApi,
-} from '@gear-js/react-hooks';
-import { bnToBn } from '@polkadot/util';
-import { useAccount } from 'contexts/Account';
-import { Keyring } from '@polkadot/api';
+} from "@gear-js/react-hooks";
+import { bnToBn } from "@polkadot/util";
+import { useAccount } from "contexts/Account";
+import { Keyring } from "@polkadot/api";
 
 type SendMessageOptions = {
   value?: string | number;
@@ -34,8 +34,8 @@ function useSendMessage(
   const { account } = useAccount();
   const alert = useAlert();
 
-  const title = 'gear.sendMessage';
-  const loadingAlertId = useRef('');
+  const title = "gear.sendMessage";
+  const loadingAlertId = useRef("");
 
   const handleEventsStatus = (
     events: EventRecord[],
@@ -43,12 +43,12 @@ function useSendMessage(
     onError?: () => void
   ) => {
     events.forEach(({ event: { method, section } }) => {
-      if (method === 'MessageQueued') {
+      if (method === "MessageQueued") {
         alert.success(`${section}.MessageQueued`);
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         onSuccess && onSuccess();
-      } else if (method === 'ExtrinsicFailed') {
-        alert.error('Extrinsic Failed', { title });
+      } else if (method === "ExtrinsicFailed") {
+        alert.error("Extrinsic Failed", { title });
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         onError && onError();
       }
@@ -66,17 +66,17 @@ function useSendMessage(
     if (isInvalid) {
       alert.update(
         loadingAlertId.current,
-        'Transaction error. Status: isInvalid',
+        "Transaction error. Status: isInvalid",
         DEFAULT_ERROR_OPTIONS
       );
     } else if (isReady) {
-      alert.update(loadingAlertId.current, 'Ready');
+      alert.update(loadingAlertId.current, "Ready");
     } else if (isInBlock) {
-      alert.update(loadingAlertId.current, 'In Block');
+      alert.update(loadingAlertId.current, "In Block");
     } else if (isFinalized) {
       alert.update(
         loadingAlertId.current,
-        'Finalized',
+        "Finalized",
         DEFAULT_SUCCESS_OPTIONS
       );
       handleEventsStatus(events, onSuccess, onError);
@@ -87,7 +87,7 @@ function useSendMessage(
     const { publicKey, privateKey } = account;
 
     if (publicKey && privateKey && metadata) {
-      loadingAlertId.current = alert.loading('Sign In', { title });
+      loadingAlertId.current = alert.loading("Sign In", { title });
 
       const {
         value = 0,
@@ -97,7 +97,7 @@ function useSendMessage(
       } = options || {};
 
       const decodedAddress = decodeAddress(publicKey);
-      const keyring = new Keyring({ type: 'sr25519' });
+      const keyring = new Keyring({ type: "sr25519" });
       const accountPair = keyring.addFromMnemonic(privateKey);
 
       const getGasLimit = isMaxGasLimit

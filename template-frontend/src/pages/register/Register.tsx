@@ -54,7 +54,7 @@ function Register() {
       .then((response) => {
         if (!response.ok) throw new Error(response.statusText);
 
-        setAccount({ publicKey, privateKey, isAdmin: false });
+        setAccount({ publicKey, privateKey });
         navigate("/info");
       })
       .catch((error: Error) => {
