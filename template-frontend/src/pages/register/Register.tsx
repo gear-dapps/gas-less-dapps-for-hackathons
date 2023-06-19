@@ -55,7 +55,7 @@ function Register() {
         if (!response.ok) throw new Error(response.statusText);
 
         setAccount({ publicKey, privateKey });
-        navigate("/info");
+        navigate("/");
       })
       .catch((error: Error) => {
         alert.error(error.message);
