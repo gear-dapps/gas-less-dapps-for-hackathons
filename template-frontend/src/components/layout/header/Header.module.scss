@@ -4,3 +4,12 @@
   align-items: center;
   padding: 30px 0;
 }
+
+.actions {
+  display: flex;
+  align-items: center;
+
+  > * + * {
+    margin-left: 16px;
+  }
+}

@@ -6,13 +6,34 @@ export function AvailableGames() {
       <h2>Available games</h2>
       <ul className={styles.gamesList}>
         <li>
-          <div />
+          <a
+            href="https://"
+            target="_blank"
+            rel="noreferrer"
+            title="Game title"
+          >
+            <div />
+          </a>
         </li>
         <li>
-          <div />
+          <a
+            href="https://"
+            target="_blank"
+            rel="noreferrer"
+            title="Game title"
+          >
+            <div />
+          </a>
         </li>
         <li>
-          <div />
+          <a
+            href="https://"
+            target="_blank"
+            rel="noreferrer"
+            title="Game title"
+          >
+            <div />
+          </a>
         </li>
       </ul>
     </section>

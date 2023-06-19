@@ -1,12 +1,14 @@
 @use '@gear-js/ui/variables' as *;
 
 .container {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
   height: 100%;
   width: 100%;
 
-  > *:not(:first-child) {
-    margin-top: 80px;
+  > *:not(:last-child) {
+    margin-bottom: 80px;
   }
 }
 
@@ -46,13 +48,6 @@
   }
 }
 
-.adminUsersTokens {
-  > *:not(:first-child) {
-    margin-top: 20px;
-  }
-}
-.adminUsersTokensContent {
-  > *:not(:first-child) {
-    margin-top: 12px;
-  }
+.games {
+  margin-top: auto;
 }
